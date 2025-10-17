@@ -5,7 +5,7 @@ if [[ -z "$NODE_NAME" ]] || [[ -z "$NODE_TYPE" ]] || [[ -z "$INSTANCE" ]] || [[ 
   echo "Please put all variable values correctly."
   exit 1 
 else
-  DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=$DD_API_KEY DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
+  DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=$DD_API_KEY DD_SITE="${DD_SITE:=datadoghq.com}" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
 fi
 
 #2. TAG Set Up
@@ -66,7 +66,23 @@ instances:
       - klaytn_build_info
 EOF
 
+if [ "$NODE_TYPE" == "cn" ]
+then
+conf=`find / -name 'kcnd.conf' -type f | head -n 1`
+LOG_DIR=`cat $conf | grep LOG_DIR | cut -d '=' -f 2 | tr -d ' '`
 
+mkdir -p /etc/datadog-agent/conf.d/go.d
+cat << EOF > /etc/datadog-agent/conf.d/go.d/conf.yaml
+#4. Log Config
+logs:
+  - type: file
+    path: $LOG_DIR/kcnd.out
+    service: kaia-cn
+    source: go
+    sourcecategory: sourcecode
+EOF
+elif [ "$NODE_TYPE" == "pn" ]
+then
 conf=`find / -name 'kpnd.conf' -type f | head -n 1`
 LOG_DIR=`cat $conf | grep LOG_DIR | cut -d '=' -f 2 | tr -d ' '`
 
@@ -80,6 +96,7 @@ logs:
     source: go
     sourcecategory: sourcecode
 EOF
+fi
 
 #5. APPLY datadog-agent Config
 systemctl restart datadog-agent
