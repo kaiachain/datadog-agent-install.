@@ -78,6 +78,10 @@ instances:
       - klaytn_consensus_istanbul_core_hashLock
       - klaytn_consensus_istanbul_core_committeeSize
       - klaytn_build_info
+      - kaiax/auction/bidpool/num/bids
+      - kaiax/auction/bidpool/num/bidreqs
+      - miner/balance
+      
 EOF
 
 mkdir -p /etc/datadog-agent/conf.d/go.d
