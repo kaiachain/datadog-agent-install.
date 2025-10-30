@@ -108,9 +108,9 @@ instances:
       - klaytn_consensus_istanbul_core_hashLock
       - klaytn_consensus_istanbul_core_committeeSize
       - klaytn_build_info
-      - kaiax/auction/bidpool/num/bids
-      - kaiax/auction/bidpool/num/bidreqs
-      - miner/balance
+      - kaiax_auction_bidpool_num/bids
+      - kaiax_auction_bidpool_num/bidreqs
+      - miner_balance
 EOF
 
 #5. APPLY datadog-agent Config
