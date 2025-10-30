@@ -108,8 +108,8 @@ instances:
       - klaytn_consensus_istanbul_core_hashLock
       - klaytn_consensus_istanbul_core_committeeSize
       - klaytn_build_info
-      - kaiax_auction_bidpool_num/bids
-      - kaiax_auction_bidpool_num/bidreqs
+      - kaiax_auction_bidpool_num_bids
+      - kaiax_auction_bidpool_num_bidreqs
       - miner_balance
 EOF
 
