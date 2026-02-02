@@ -6,7 +6,7 @@ CONFIG_FILE="/etc/datadog-agent/conf.d/openmetrics.d/conf.yaml"
 
 # List of new metrics to add (including 6 spaces and a hyphen for correct YAML formatting)
 # \n is used for line breaks.
-NEW_METRICS="      - kaiax_auction_bidpool_num_bids\n      - kaiax_auction_bidpool_num_bidreqs\n      - miner_balance"
+NEW_METRICS="      - miner_block_mining_blobs/n            - vrank_first_preprepare\n"
 
 # --- Script Execution Start ---
 
@@ -21,8 +21,8 @@ cp "${CONFIG_FILE}" "${CONFIG_FILE}.bak"
 
 echo "⚙️  Adding new metrics to file: ${CONFIG_FILE}"
 
-# Use sed to append the new metrics right after the '- klaytn_build_info' line.
-if sed -i '/- klaytn_build_info/a\'"$NEW_METRICS"'' "${CONFIG_FILE}"; then
+# Use sed to append the new metrics right after the '- miner_balance' line.
+if sed -i '/- miner_balance/a\'"$NEW_METRICS"'' "${CONFIG_FILE}"; then
     echo "✅ Metrics added successfully."
     echo ""
     echo "--- Verification of Added Content (Last part of the file) ---"
